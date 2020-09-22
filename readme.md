@@ -3,6 +3,13 @@ You have to configure file .env. In this file you need to change an email addres
 
     MAILER_URL=gmail://randomemail@gmail.com:randompassword@localhost
 
+And add key and url for Yahoo and Nasdaq company source here
+
+    YAHOO_RAPID_API_KEY=
+    YAHOO_FINANCE_BASE_URL=
+    #NASDAQ
+    NASDAQ_COMPANY_SOURCE=
+
 You can use xampp, lamp to deploy on http server with port 80
 Or you can run 
     
