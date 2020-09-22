@@ -1,0 +1,114 @@
+<div class="card mt-5 p-2">
+  <div class="col-lg-12">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="mb-3 mt-2">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="email">Email</label>
+          </div>
+          <input type="email" [ngClass]="{'is-invalid': form.get('email').touched && form.get('email').invalid}"
+                 class="form-control"
+                 id="email" aria-describedby="email" placeholder="Enter email" name="email" formControlName="email">
+          <div class="invalid-feedback" *ngIf="form.get('email').invalid && form.get('email').touched">
+            <small class="text-danger" *ngIf="form.get('email').errors.required && form.get('email').touched">
+              Please type an email
+            </small>
+            <small class="text-danger" *ngIf="form.get('email').errors.email && form.get('email').touched">
+              Invalid email
+            </small>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="mb-3">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="companySymbol">Company symbol</label>
+          </div>
+          <input type="text" [ngClass]="{'is-invalid': form.get('companySymbol').touched && form.get('companySymbol').invalid}" class="form-control"
+                 id="companySymbol" placeholder="Enter company symbol" formControlName="companySymbol">
+          <div class="invalid-feedback" *ngIf="form.get('companySymbol').invalid && form.get('companySymbol').touched">
+            <small class="form-text text-danger" *ngIf="form.get('companySymbol').errors.required">
+              Type company symbol
+            </small>
+            <small class="form-text text-danger" *ngIf="form.get('companySymbol').errors.companyIsNotExists">
+              Company with current symbol is not exists
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="dateFromDP">From</label>
+          </div>
+          <input class="form-control" [ngClass]="{'is-invalid': form.get('dateFrom').touched && form.get('dateFrom').invalid}" placeholder="yyyy-mm-dd" formControlName="dateFrom"
+                 id="dateFromDP" name="dateFromDP" ngbDatepicker #dateFrom="ngbDatepicker" [maxDate]="maxDate">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="dateFrom.toggle()" type="button">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </div>
+          <div class="invalid-feedback" *ngIf="form.get('dateFrom').invalid && form.get('dateFrom').touched">
+            <small class="form-text text-danger" *ngIf="form.get('dateFrom').errors.required">
+              Set date from
+            </small>
+            <small class="form-text text-danger" *ngIf="form.get('dateTo').errors.dateHigherThanNow">
+              Date from is higher than now
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="dateToDP">To</label>
+          </div>
+          <input class="form-control" [ngClass]="{'is-invalid': form.get('dateTo').touched && form.get('dateTo').invalid}" placeholder="yyyy-mm-dd" formControlName="dateTo"
+                 id="dateToDP" name="dateToDP" ngbDatepicker #dateTo="ngbDatepicker" [maxDate]="maxDate">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="dateTo.toggle()" type="button">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </div>
+          <div class="invalid-feedback" *ngIf="form.get('dateTo').invalid && form.get('dateTo').touched">
+            <small class="form-text text-danger" *ngIf="form.get('dateTo').errors.required">
+              Set date to
+            </small>
+            <small class="form-text text-danger" *ngIf="form.get('dateTo').errors.dateHigherThanNow">
+              Date to is higher than now
+            </small>
+            <small class="form-text text-danger" *ngIf="form.get('dateTo').errors.dateFromHigherThanDateTo">
+              Date less than date from
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="loading || form.invalid"
+        class="btn btn-primary"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        {{ loading ? 'Loading...' : 'Get data'}}
+      </button>
+    </form>
+  </div>
+</div>
+
+
+<div class="row pt-5">
+  <div class="col-lg-12">
+    <app-history-table [historyItems]="historyItems" [loading]="loading"></app-history-table>
+  </div>
+</div>
+<div class="row pt-5">
+  <div class="col-lg-12">
+    <app-history-chart [loading]="loading" [historyItems]="historyItems"></app-history-chart>
+  </div>
+</div>

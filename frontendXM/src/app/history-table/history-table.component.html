@@ -1,0 +1,37 @@
+<div class="flex-fill card">
+  <div class="card-header">
+    <h5 class="mb-0 card-title">History items</h5>
+    <div *ngIf="loading" class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div *ngIf="!loading && !historyItems.length">
+      <h5 class="text-center">Nothing to display</h5>
+    </div>
+    <table *ngIf="!loading && historyItems.length" class="table">
+
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Open</th>
+        <th scope="col">Low</th>
+        <th scope="col">High</th>
+        <th scope="col">Close</th>
+        <th scope="col">Volume</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of historyItems ">
+        <td>{{row.date * 1000 | date: 'yyyy-MM-dd'}}</td>
+        <td>{{row.open}}</td>
+        <td>{{row.low}}</td>
+        <td>{{row.high}}</td>
+        <td>{{row.close}}</td>
+        <td>{{row.volume}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
